@@ -78,7 +78,7 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: isSpeaking
     m_EventTreshold: 0
-  - m_ConditionMode: 6
+  - m_ConditionMode: 3
     m_ConditionEvent: Stage
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
@@ -143,7 +143,7 @@ AnimatorStateMachine:
     m_Position: {x: 20, y: 340, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8680501105679457582}
-    m_Position: {x: 240, y: 340, z: 0}
+    m_Position: {x: 230, y: 340, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5759307333414407430}
     m_Position: {x: 310, y: 190, z: 0}
@@ -170,12 +170,12 @@ AnimatorController:
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 1
+    m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: Stage
     m_Type: 3
     m_DefaultFloat: 0
-    m_DefaultInt: 2
+    m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   m_AnimatorLayers:
@@ -305,7 +305,7 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: isSpeaking
     m_EventTreshold: 0
-  - m_ConditionMode: 3
+  - m_ConditionMode: 6
     m_ConditionEvent: Stage
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
