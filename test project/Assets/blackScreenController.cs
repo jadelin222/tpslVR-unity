@@ -1,81 +1,53 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using UnityEngine.XR;
-using System.Collections.Generic;
+using UnityEngine.XR.Interaction.Toolkit;
 
-public class BlackScreenController : MonoBehaviour
+public class WakeUpController : MonoBehaviour
 {
     public AudioSource audioSource;
-    public Image blackScreen;
-    public TextMeshProUGUI hintText; 
-    private bool isAudioFinished = false;
-    //public charactermovementhelper movementHelper; // Reference to your movement helper script
+    public GameObject darkScreen;
+    public TextMeshProUGUI hintText;
+    public XRRayInteractor leftHandController; // Assign the left hand controller
+    public XRDirectInteractor rightHandController; // Assign the right hand controller
+    private bool hasWokenUp = false;
 
-   
     void Start()
     {
         audioSource.Play();
-        hintText.enabled = false; // hide the hint
+        StartCoroutine(ShowHintAfterAudio());
+    }
+
+    IEnumerator ShowHintAfterAudio()
+    {
+        yield return new WaitWhile(() => audioSource.isPlaying);
+        hintText.gameObject.SetActive(true);
     }
 
     void Update()
     {
-        if (!audioSource.isPlaying && !isAudioFinished)
+        if (!hasWokenUp && Input.GetButtonDown("Submit")) // "Submit" is typically the "A" button, but check your Input settings
         {
-            hintText.enabled = true; //show the hint when audio finishes
-
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                isAudioFinished = true;
-                StartCoroutine(FadeOutBlackScreen());
-                hintText.enabled = false; // hide the hint again
-                //movementHelper.allowMovement = true;
-            }
+            StartCoroutine(WakeUp());
         }
-
-        //if (!audioSource.isPlaying && !isAudioFinished)
-        //{
-        //    hintText.enabled = true; // Show the hint when audio finishes
-
-        //    // Check for the "A" button press on the right-hand controller
-        //    List<InputDevice> devices = new List<InputDevice>();
-        //    InputDeviceCharacteristics rightControllerCharacteristics = InputDeviceCharacteristics.Right | InputDeviceCharacteristics.Controller;
-        //    InputDevices.GetDevicesWithCharacteristics(rightControllerCharacteristics, devices);
-
-        //    foreach (var device in devices)
-        //    {
-        //        bool isAPressed;
-        //        if (device.TryGetFeatureValue(CommonUsages.primaryButton, out isAPressed) && isAPressed)
-        //        {
-        //            // when press a on controller
-        //            isAudioFinished = true;
-        //            StartCoroutine(FadeOutBlackScreen());
-        //            hintText.enabled = false; // hide the hint again
-        //            movementHelper.allowMovement = true; // enable movement
-        //            break; // break the loop once the button press is detected
-        //        }
-        //    }
-        //}
-
-
     }
 
-    IEnumerator FadeOutBlackScreen()
+    IEnumerator WakeUp()
     {
-        float duration = 2.0f; // Fade duration in seconds
-        float elapsedTime = 0;
-        Color initialColor = blackScreen.color;
+        hasWokenUp = true;
+        hintText.gameObject.SetActive(false);
 
-        while (elapsedTime < duration)
+        // Fade out the dark screen
+        CanvasGroup canvasGroup = darkScreen.AddComponent<CanvasGroup>();
+        while (canvasGroup.alpha > 0)
         {
-            elapsedTime += Time.deltaTime;
-            float alpha = Mathf.Lerp(1, 0, elapsedTime / duration);
-            blackScreen.color = new Color(initialColor.r, initialColor.g, initialColor.b, alpha);
+            canvasGroup.alpha -= Time.deltaTime;
             yield return null;
         }
+        Destroy(darkScreen); // Optional: destroy or deactivate the dark screen
 
-        blackScreen.gameObject.SetActive(false); // disable the black screen gameObject
+        // Enable player movement (assuming movement is disabled by default)
+        //leftHandController.enableInteractions = true;
+        //rightHandController.enableInteractions = true;
     }
 }
