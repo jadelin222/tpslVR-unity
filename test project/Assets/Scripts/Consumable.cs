@@ -28,7 +28,7 @@ public class Consumable : MonoBehaviour
             index++;
             SetVisuals();
             _audioSource.Play();
-            // Stop the audio after 4 seconds
+            //stop the audio after 4 seconds
             Invoke("StopAudio", 4f);
 
         }
@@ -43,7 +43,7 @@ public class Consumable : MonoBehaviour
     }
     void StopAudio()
     {
-        _audioSource.Stop(); // Stops playing the audio
+        _audioSource.Stop(); 
     }
 
 
