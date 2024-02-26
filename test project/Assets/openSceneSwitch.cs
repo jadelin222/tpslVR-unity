@@ -12,6 +12,8 @@ public class openSceneSwitch : MonoBehaviour
     public string nextSceneName = "NextScene";
     public GameObject darkScreen;
 
+    public FadeScreen fadeScreen;
+
     void Start()
     {
         knockingAudio.Play();
@@ -48,18 +50,34 @@ public class openSceneSwitch : MonoBehaviour
 
     IEnumerator FadeOutAndLoadNextScene()
     {
-        
         wakeUpText.gameObject.SetActive(false);
+        fadeScreen.FadeOut();
+        yield return new WaitForSeconds(fadeScreen.fadeDuration);
+        
 
-        //fade out the dark screen
-        CanvasGroup canvasGroup = darkScreen.AddComponent<CanvasGroup>();
-        while (canvasGroup.alpha > 0)
-        {
-            canvasGroup.alpha -= Time.deltaTime;
-            yield return null;
-        }
+        ////fade out the dark screen
+        //CanvasGroup canvasGroup = darkScreen.AddComponent<CanvasGroup>();
+        //while (canvasGroup.alpha > 0)
+        //{
+        //    canvasGroup.alpha -= Time.deltaTime;
+        //    yield return null;
+        //}
         //Destroy(darkScreen); //destroy or deactivate the dark screen
         //after fade-out, load the next scene
         SceneManager.LoadScene(nextSceneName);
     }
+
+
+    //public void GoToScene(int sceneIndex)
+    //{
+    //    StartCoroutine(GoToSceneRoutine(sceneIndex));
+    //}
+    //IEnumerator GoToSceneRoutine(int sceneIndex)
+    //{
+    //    fadeScreen.FadeOut();
+    //    yield return new WaitForSeconds(fadeScreen.fadeDuration);
+
+    //    SceneManager.LoadScene(sceneIndex);
+
+    //}
 }
