@@ -29,6 +29,7 @@ public class openSceneSwitch : MonoBehaviour
 
         if (wakeUpText.gameObject.activeInHierarchy && AnyButtonPressed())
         {
+            wakeUpText.gameObject.SetActive(false);
             StartCoroutine(FadeOutAndLoadNextScene());
         }
     }
@@ -50,7 +51,7 @@ public class openSceneSwitch : MonoBehaviour
 
     IEnumerator FadeOutAndLoadNextScene()
     {
-        wakeUpText.gameObject.SetActive(false);
+        
         fadeScreen.FadeOut();
         yield return new WaitForSeconds(fadeScreen.fadeDuration);
         
