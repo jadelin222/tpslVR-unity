@@ -49,8 +49,8 @@ public class BagInteraction : MonoBehaviour
 
     IEnumerator ShrinkAndDisappear(GameObject item)
     {
-        //animation to shrink the item
-        float duration = 2.5f; //duration of the shrink animation
+        // Animation to shrink the item
+        float duration = 2.5f; // Duration of the shrink animation
         float elapsedTime = 0;
 
         while (elapsedTime < duration)
@@ -60,7 +60,7 @@ public class BagInteraction : MonoBehaviour
             yield return null;
         }
 
-        Destroy(item); // destroy the item after the animation
+        Destroy(item); // Destroy the item after the animation
     }
 
     void TaskCompleted()
