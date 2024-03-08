@@ -16,10 +16,10 @@ TagManager:
   - Teleportation
   - body
   - noPeek
-  - 
-  - 
-  - 
-  - 
+  - Grabbing
+  - Grabbable
+  - Hand
+  - HandPlayer
   - 
   - 
   - 

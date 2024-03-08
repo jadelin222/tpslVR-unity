@@ -6,11 +6,14 @@ public class triggerFX : MonoBehaviour
     public AudioClip[] stage2Greetings;
     public AudioClip[] stage3Greetings;
     public AudioClip[] bagInteractions;
-    
+    public AudioClip gameOverVoiceLine;
+    public GameObject[] angerSprites;
+
     private AudioSource audioSource;
     private Animator animator;
     private Clock clock; //reference to the Clock script
     private Transform playerTransform;
+    private int currentAngerLevel = 0;
 
     void Start()
     {
@@ -24,6 +27,32 @@ public class triggerFX : MonoBehaviour
         if (animator.GetBool("isSpeaking"))
         {
             FacePlayer();
+        }
+        ManageAngerBasedOnTimeAndTasks();
+    }
+
+    void ManageAngerBasedOnTimeAndTasks()
+    {
+        // Initial anger level based on time stages
+        //currentAngerLevel = (clock.minutes / 15) % 4;
+        currentAngerLevel = (clock.minutes / 15) % 4;
+        //Debug.Log(currentAngerLevel);
+        //clock.GetCurrentStage();
+        //currentAngerLevel = currentStage;
+
+
+        if (Consumer.teethBrushed) currentAngerLevel--;
+        if (Consumer.foodEaten) currentAngerLevel--;
+        if (BagInteraction.bagPacked) currentAngerLevel--; 
+        //if (BagInteraction.task2Completed) currentAngerLevel--; // Example
+
+        // Clamp the anger level to ensure it doesn't go below 0
+        currentAngerLevel = Mathf.Clamp(currentAngerLevel, 0, angerSprites.Length);
+
+        // Update sprite visibility based on the current anger level
+        for (int i = 0; i < angerSprites.Length; i++)
+        {
+            angerSprites[i].SetActive(i < currentAngerLevel);
         }
     }
     void OnTriggerEnter(Collider other)
@@ -74,6 +103,14 @@ public class triggerFX : MonoBehaviour
         audioSource.Play();
         animator.SetBool("isSpeaking", true); // start speaking animation
         Invoke("StopSpeaking", audioSource.clip.length); // stop speaking animation when audio finished
+    }
+    public void PlayEndGameVoiceLine()
+    {
+        audioSource.PlayOneShot(gameOverVoiceLine);
+        animator.SetBool("isSpeaking", true); // start speaking animation
+        Invoke("StopSpeaking", gameOverVoiceLine.length);
+        ////also invoke game over ui when audio done playing
+        //Invoke("ShowEndScreen", gameOverVoiceLine.length);
     }
 
     void StopSpeaking()

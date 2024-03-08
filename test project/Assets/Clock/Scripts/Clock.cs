@@ -3,11 +3,13 @@ using System.Collections;
 
 public class Clock : MonoBehaviour {
 
-	//-- set start time 00:00
+    public triggerFX npcScript;
+    //-- set start time 00:00
     public int minutes = 0;
     public int hour = 0;
 	public int seconds = 0;
 	public bool realTime=false;
+    public bool gameOver = false;
 	
 	public GameObject pointerSeconds;
     public GameObject pointerMinutes;
@@ -63,7 +65,22 @@ void Update()
     pointerMinutes.transform.localEulerAngles = new Vector3(0.0f, 0.0f, rotationMinutes);
     pointerHours.transform.localEulerAngles   = new Vector3(0.0f, 0.0f, rotationHours);
 
+     // Check if the time is 7 o'clock
+    if (hour == 7 && minutes == 0 && seconds == 0)
+    {
+            //gameOver = true;
+        npcScript.PlayEndGameVoiceLine();
+    }
+
 }
+//void GameEnd()
+//{
+//    // Trigger NPC's voice line
+//    FindObjectOfType<triggerFX>().PlayEndGameVoiceLine();
+
+//    // Show end screen after a delay (assuming the voice line has a fixed length)
+//    Invoke("ShowEndScreen", voiceLineDuration); // voiceLineDuration is the length of the voice line
+//}
 public int GetCurrentStage()
 {
     return (minutes / 20) % 3;

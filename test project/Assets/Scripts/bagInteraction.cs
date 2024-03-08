@@ -5,6 +5,8 @@ using UnityEngine;
 public class BagInteraction : MonoBehaviour
 {
     public triggerFX npcScript; // Reference to the NPC's script
+    public static bool bagPacked = false;
+
     public string[] requiredItems; // Array of required item identifiers
     public AudioClip taskCompletedSound; // Sound to play when task is completed
     private AudioSource audioSource;
@@ -67,7 +69,7 @@ public class BagInteraction : MonoBehaviour
     {
 
         Debug.Log("taskcompleted");
-
+        bagPacked = true;
         if (audioSource != null)
         {
             audioSource.PlayOneShot(taskCompletedSound); // Play the task completed sound
@@ -76,7 +78,7 @@ public class BagInteraction : MonoBehaviour
         {
             Debug.LogError("AudioSource component not found on the GameObject.");
         }
-        audioSource.PlayOneShot(taskCompletedSound); // Play the task completed sound
+        //audioSource.PlayOneShot(taskCompletedSound); // Play the task completed sound
         // Additional logic for task completion can be added here
     }
 }
