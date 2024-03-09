@@ -11,9 +11,11 @@ public class BagInteraction : MonoBehaviour
     public AudioClip taskCompletedSound; // Sound to play when task is completed
     private AudioSource audioSource;
     private HashSet<string> collectedItems = new HashSet<string>(); // Tracks collected items
-
+    //private int itemsCollected = 0; // Counter for collected items
+    //public int requiredItemsCount = 3;
     void Start()
     {
+
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -21,7 +23,12 @@ public class BagInteraction : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            npcScript.PlayBagInteraction(); // NPC responds to player-bag interaction
+            float chance = Random.Range(0f, 1f);
+
+            if (chance < 0.5f)
+            {
+                npcScript.PlayBagInteraction(); //play a random interaction voice line 
+            }
         }
         else
         {
@@ -52,7 +59,7 @@ public class BagInteraction : MonoBehaviour
     IEnumerator ShrinkAndDisappear(GameObject item)
     {
         // Animation to shrink the item
-        float duration = 2.5f; // Duration of the shrink animation
+        float duration = 1.0f; // Duration of the shrink animation
         float elapsedTime = 0;
 
         while (elapsedTime < duration)
@@ -78,7 +85,6 @@ public class BagInteraction : MonoBehaviour
         {
             Debug.LogError("AudioSource component not found on the GameObject.");
         }
-        //audioSource.PlayOneShot(taskCompletedSound); // Play the task completed sound
-        // Additional logic for task completion can be added here
+  
     }
 }

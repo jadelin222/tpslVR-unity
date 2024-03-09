@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Bag
   - Toothbrush
+  - BagItem
   layers:
   - Default
   - TransparentFX
