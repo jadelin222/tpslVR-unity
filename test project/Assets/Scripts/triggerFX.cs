@@ -1,10 +1,13 @@
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class triggerFX : MonoBehaviour
 {
-    public AudioClip[] stage1Greetings;
-    public AudioClip[] stage2Greetings;
-    public AudioClip[] stage3Greetings;
+    public AudioClip[] stage1Greetings;//0
+    public AudioClip[] stage2Greetings;//1
+    public AudioClip stage1Announcement;//1
+    public AudioClip[] stage3Greetings;//2
+    public AudioClip stage2Announcement;//2
     public AudioClip[] bagInteractions;
     public AudioClip gameOverVoiceLine;
     public GameObject[] angerSprites;
@@ -14,6 +17,9 @@ public class triggerFX : MonoBehaviour
     private Clock clock; //reference to the Clock script
     private Transform playerTransform;
     private int currentAngerLevel = 0;
+    private int currentStage;
+    private bool played720Line = false;
+    private bool played740Line = false;
 
     void Start()
     {
@@ -24,27 +30,27 @@ public class triggerFX : MonoBehaviour
     }
     void Update()
     {
+        currentStage = clock.GetCurrentStage(); //get current stage from the Clock
+        PlayStageAnnouncement(currentStage);
         if (animator.GetBool("isSpeaking"))
         {
             FacePlayer();
         }
+
         ManageAngerBasedOnTimeAndTasks();
     }
 
     void ManageAngerBasedOnTimeAndTasks()
     {
-        // Initial anger level based on time stages
-        //currentAngerLevel = (clock.minutes / 15) % 4;
+        //initial anger level based on time stages
         currentAngerLevel = (clock.minutes / 15) % 4;
         //Debug.Log(currentAngerLevel);
-        //clock.GetCurrentStage();
-        //currentAngerLevel = currentStage;
-
+  
 
         if (Consumer.teethBrushed) currentAngerLevel--;
         if (Consumer.foodEaten) currentAngerLevel--;
         if (BagInteraction.bagPacked) currentAngerLevel--; 
-        //if (BagInteraction.task2Completed) currentAngerLevel--; // Example
+        //if (ExamPaper.paperSigned) currentAngerLevel--; 
 
         // Clamp the anger level to ensure it doesn't go below 0
         currentAngerLevel = Mathf.Clamp(currentAngerLevel, 0, angerSprites.Length);
@@ -65,35 +71,101 @@ public class triggerFX : MonoBehaviour
        
     }
 
+    //void PlayRandomGreeting()
+    //{
+    //    GetComponent<NPCRandomWalk>().enabled = false;
+    //    int currentStage = clock.GetCurrentStage(); // get current stage from the Clock
+    //    AudioClip[] selectedGreetings = stage1Greetings; // default to stage 1 greetings
+
+    //    // update the animator with the current stage
+    //    animator.SetInteger("Stage", currentStage); // access int parameter Stage in animator
+
+    //    //select greeting based on the current stage
+    //    if (currentStage == 1)
+    //    {
+    //        selectedGreetings = stage2Greetings;
+    //    }
+    //    else if (currentStage == 2)
+    //    {
+    //        selectedGreetings = stage3Greetings;
+    //    }
+
+    //    //check if there are greetings for the current stage
+    //    if (selectedGreetings.Length == 0) return;
+    //    //select a random greeting from the current stage
+    //    int index = Random.Range(0, selectedGreetings.Length);
+    //    audioSource.clip = selectedGreetings[index];
+    //    audioSource.Play();
+    //    animator.SetBool("isSpeaking", true); //start speaking animation
+    //    Invoke("StopSpeaking", audioSource.clip.length); //stop speaking anim when audio finished
+        
+    //}
     void PlayRandomGreeting()
     {
+        // Check if the audioSource is currently playing, indicating that a time announcement or another greeting is active
+        if (audioSource.isPlaying) return;
+
         GetComponent<NPCRandomWalk>().enabled = false;
-        int currentStage = clock.GetCurrentStage(); // get current stage from the Clock
-        AudioClip[] selectedGreetings = stage1Greetings; // default to stage 1 greetings
-
+        //int currentStage = clock.GetCurrentStage(); // Get current stage from the Clock
+        AudioClip[] selectedGreetings = null;
         // update the animator with the current stage
-        animator.SetInteger("Stage", currentStage); // access int parameter Stage in animator
-
-        //select greeting based on the current stage
-        if (currentStage == 1)
+        animator.SetInteger("Stage", currentStage);
+       //determine the appropriate set of greetings based on the current stage
+        switch (currentStage)
         {
-            selectedGreetings = stage2Greetings;
-        }
-        else if (currentStage == 2)
-        {
-            selectedGreetings = stage3Greetings;
+            case 0:
+                selectedGreetings = stage1Greetings;
+                break;
+            case 1:
+                selectedGreetings = stage2Greetings;
+                break;
+            case 2:
+                selectedGreetings = stage3Greetings;
+                break;
         }
 
-        //check if there are greetings for the current stage
-        if (selectedGreetings.Length == 0) return;
-        //select a random greeting from the current stage
-        int index = Random.Range(0, selectedGreetings.Length);
-        audioSource.clip = selectedGreetings[index];
-        audioSource.Play();
-        animator.SetBool("isSpeaking", true); //start speaking animation
-        Invoke("StopSpeaking", audioSource.clip.length); //stop speaking anim when audio finished
-        
+        //play a random greeting if there are any for the current stage
+        if (selectedGreetings != null && selectedGreetings.Length > 0)
+        {
+            int index = Random.Range(0, selectedGreetings.Length);
+            audioSource.clip = selectedGreetings[index];
+            audioSource.Play();
+            animator.SetBool("isSpeaking", true); // Start speaking animation
+            Invoke("StopSpeaking", audioSource.clip.length); // Schedule end of speaking animation
+        }
     }
+
+    private void PlayStageAnnouncement(int stage)
+    {
+        AudioClip clipToPlay = null;
+
+        switch (stage)
+        {
+            case 1:
+                if (!played720Line) //make sure it's only played once
+                {
+                    clipToPlay = stage1Announcement;
+                    played720Line = true;
+                }
+                break;
+            case 2:
+                if (!played740Line) 
+                {
+                    clipToPlay = stage2Announcement;
+                    played740Line = true;
+                }
+                break;
+        }
+
+        if (clipToPlay != null)
+        {
+            audioSource.PlayOneShot(clipToPlay);
+            animator.SetBool("isSpeaking", true);
+            //Invoke(nameof(StopSpeaking), clipToPlay.length);
+            Invoke("StopSpeaking", clipToPlay.length);
+        }
+    }
+
 
     public void PlayBagInteraction()
     {
