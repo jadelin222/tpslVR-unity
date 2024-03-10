@@ -65,10 +65,9 @@ void Update()
     pointerMinutes.transform.localEulerAngles = new Vector3(0.0f, 0.0f, rotationMinutes);
     pointerHours.transform.localEulerAngles   = new Vector3(0.0f, 0.0f, rotationHours);
 
-     // Check if the time is 7 o'clock
+     //check if the time is 7 o'clock
     if (hour == 7 && minutes == 0 && seconds == 0)
     {
-            //gameOver = true;
         npcScript.PlayEndGameVoiceLine();
     }
 

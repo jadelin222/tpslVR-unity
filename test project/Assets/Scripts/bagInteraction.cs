@@ -75,7 +75,7 @@ public class BagInteraction : MonoBehaviour
     void TaskCompleted()
     {
 
-        Debug.Log("taskcompleted");
+        Debug.Log("bagtaskcompleted");
         bagPacked = true;
         if (audioSource != null)
         {

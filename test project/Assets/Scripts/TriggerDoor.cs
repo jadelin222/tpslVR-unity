@@ -1,11 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class TriggerDoor : MonoBehaviour
 {
-
     public GameObject door;
     private Animator doorAnim;
     public bool isOpen;
