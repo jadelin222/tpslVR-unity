@@ -19,7 +19,7 @@ public class SceneTransitionManager : MonoBehaviour
 
         SceneManager.LoadScene(sceneIndex);
 
-        // Destroy the fade screen after the transition
+        // destroy the fade screen after the transition
         Destroy(fadeScreen.gameObject);
     }
     
