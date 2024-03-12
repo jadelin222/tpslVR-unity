@@ -7,6 +7,8 @@ TagManager:
   - Bag
   - Toothbrush
   - BagItem
+  - dad
+  - ExamPaper
   layers:
   - Default
   - TransparentFX

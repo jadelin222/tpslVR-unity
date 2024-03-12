@@ -31,14 +31,20 @@ public class DadVoice : MonoBehaviour
 
     void OnTriggerEnter(Collider collision)
     {
-       hitSound.Play();
-       animator.SetBool("IsColliding", true);
-       Debug.Log("hit");
+        if (collision.gameObject.tag == "ExamPaper")
+        {
+            hitSound.Play();
+            animator.SetBool(animationBoolParameter, true);
+            Debug.Log("Exam paper hit");
+        }
     }
 
     void OnTriggerExit(Collider collision)
     {
-         animator.SetBool("IsColliding", false);
+        if (collision.gameObject.tag == "ExamPaper")
+        {
+            animator.SetBool(animationBoolParameter, false);
+        }
     }
 
 }

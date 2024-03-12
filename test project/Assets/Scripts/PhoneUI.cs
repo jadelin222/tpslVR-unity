@@ -1,22 +1,21 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.InputSystem;
 
 public class PhoneUI : MonoBehaviour
 {
-    public GameObject phone;  
+    public GameObject phone;
     public GameObject phoneCanvas;
     public AudioSource ringingSound;
-    private Animator animator;
 
-    private bool hasPhoneRung = false;
+    public float vibrationIntensity = 1f; // Adjust the intensity for noticeable but controlled vibration
+
+    private bool isVibrating = true;
 
     void Start()
     {
-        animator = GetComponent<Animator>();
         phoneCanvas.SetActive(false); //initially hide the canvas
         ringingSound.Play(); //start the ringing sound
-        animator.SetBool("IsVibrating", true);
+       
     }
 
     void Update()
@@ -26,20 +25,32 @@ public class PhoneUI : MonoBehaviour
         if (phoneInteractable.isSelected)
         {
             phoneCanvas.SetActive(true);
-
-            if (!hasPhoneRung) // Check if this is the first pickup
-            {
-                ringingSound.Stop();
-                animator.SetBool("IsVibrating", false);
-                hasPhoneRung = true;
-            }
+            ringingSound.Stop();
+            isVibrating = false;
         }
         else
         {
             phoneCanvas.SetActive(false);
         }
+
+        if (isVibrating)
+        {
+            VibratePhone();
+        }
     }
 
-    
-}
+    void VibratePhone()
+    {
+      
+        float rotationFactor = vibrationIntensity * 10; // Increase the scale for rotation
+        Vector3 randomRotationOffset = new Vector3(
+            Random.Range(-rotationFactor, rotationFactor),
+            Random.Range(-rotationFactor, rotationFactor),
+            Random.Range(-rotationFactor, rotationFactor));
 
+        //apply random rotation
+        phone.transform.localEulerAngles += randomRotationOffset;
+
+    }
+
+}
