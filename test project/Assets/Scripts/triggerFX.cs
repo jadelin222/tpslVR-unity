@@ -57,7 +57,6 @@ public class triggerFX : MonoBehaviour
         currentAngerLevel = (clock.minutes / 15) % 4;
         //Debug.Log(currentAngerLevel);
   
-
         if (Consumer.teethBrushed) currentAngerLevel--;
         if (Consumer.foodEaten) currentAngerLevel--;
         if (BagInteraction.bagPacked) currentAngerLevel--; 
@@ -66,7 +65,7 @@ public class triggerFX : MonoBehaviour
         //clamp the anger level to ensure it doesn't go below 0
         currentAngerLevel = Mathf.Clamp(currentAngerLevel, 0, angerSprites.Length);
 
-        // Update sprite visibility based on the current anger level
+        //update sprite visibility based on the current anger level
         for (int i = 0; i < angerSprites.Length; i++)
         {
             angerSprites[i].SetActive(i < currentAngerLevel);
@@ -105,7 +104,6 @@ public class triggerFX : MonoBehaviour
                 selectedGreetings = stage3Greetings;
                 break;
         }
-
         
         if (selectedGreetings != null && selectedGreetings.Length > 0)
         {

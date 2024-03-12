@@ -7,13 +7,16 @@ public class PhoneUI : MonoBehaviour
     public GameObject phone;  
     public GameObject phoneCanvas;
     public AudioSource ringingSound;
+    private Animator animator;
 
     private bool hasPhoneRung = false;
 
     void Start()
     {
+        animator = GetComponent<Animator>();
         phoneCanvas.SetActive(false); //initially hide the canvas
         ringingSound.Play(); //start the ringing sound
+        animator.SetBool("IsVibrating", true);
     }
 
     void Update()
@@ -27,6 +30,7 @@ public class PhoneUI : MonoBehaviour
             if (!hasPhoneRung) // Check if this is the first pickup
             {
                 ringingSound.Stop();
+                animator.SetBool("IsVibrating", false);
                 hasPhoneRung = true;
             }
         }

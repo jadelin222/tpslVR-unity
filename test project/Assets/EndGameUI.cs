@@ -16,22 +16,16 @@ public class EndGameUI : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    //public void ShowGameOverUI(bool didWin)
-    //{
-    //    endGameCanvas.SetActive(true);
-    //    TextMeshProUGUI messageText = endGameCanvas.GetComponentInChildren<TextMeshProUGUI>();
-    //    messageText.text = didWin ? "You Win!" : "Game Over";
-    //}
     public void ShowGameOverUI()
     {
         endGameCanvas.SetActive(true);
         TextMeshProUGUI messageText = endGameCanvas.GetComponentInChildren<TextMeshProUGUI>();
-        messageText.text = "Game Over";
+        messageText.text = "Game Over. mom is angry, you're late for school, but I mean, it's not your fault, afterall, who can work under such pressure?";
     }
     public void ShowGameWinUI()
     {
         endGameCanvas.SetActive(true);
         TextMeshProUGUI messageText = endGameCanvas.GetComponentInChildren<TextMeshProUGUI>();
-        messageText.text = "Game win";
+        messageText.text = "Game win, run away from this toxic household and never comeb back again!";
     }
 }
