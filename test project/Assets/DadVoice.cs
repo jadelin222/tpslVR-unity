@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class DadVoice : MonoBehaviour
@@ -9,7 +8,7 @@ public class DadVoice : MonoBehaviour
     private AudioSource myAudioSource;
     public AudioSource hitSound; 
     private Animator animator;
-    public string animationBoolParameter = "IsColliding"; // The name of the Animator parameter
+    public string animationBoolParameter = "IsColliding"; 
 
 
     // Start is called before the first frame update

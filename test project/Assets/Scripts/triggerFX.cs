@@ -27,13 +27,15 @@ public class triggerFX : MonoBehaviour
     private bool played720Line = false;
     private bool played740Line = false;
     private bool tasksCompleteAnnounced = false;
+    private NPCRandomWalk npcRandomWalk;
 
     void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
-        clock = FindObjectOfType<Clock>(); // find the Clock object in the scene
+        clock = FindObjectOfType<Clock>(); 
+        npcRandomWalk = GetComponent<NPCRandomWalk>();
     }
     void Update()
     {
@@ -85,7 +87,7 @@ public class triggerFX : MonoBehaviour
         // Check if the audioSource is currently playing, indicating that a time announcement or another greeting is active
         if (audioSource.isPlaying) return;
 
-        GetComponent<NPCRandomWalk>().enabled = false;
+        //GetComponent<NPCRandomWalk>().enabled = false;
         //int currentStage = clock.GetCurrentStage(); // Get current stage from the Clock
         AudioClip[] selectedGreetings = null;
         // update the animator with the current stage
@@ -107,6 +109,8 @@ public class triggerFX : MonoBehaviour
         
         if (selectedGreetings != null && selectedGreetings.Length > 0)
         {
+            npcRandomWalk.StopWalking();
+
             int index = Random.Range(0, selectedGreetings.Length);
             audioSource.clip = selectedGreetings[index];
             audioSource.Play();
@@ -199,7 +203,8 @@ public class triggerFX : MonoBehaviour
    
     void StopSpeaking()
     {
-        GetComponent<NPCRandomWalk>().enabled = true;
+        //GetComponent<NPCRandomWalk>().enabled = true;
+        npcRandomWalk.StartWalking();
         animator.SetBool("isSpeaking", false); // return to idle state
 
     }
@@ -212,4 +217,5 @@ public class triggerFX : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f); // Adjust the 5f as needed for rotation speed
     }
+
 }

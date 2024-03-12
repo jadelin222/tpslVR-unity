@@ -34,4 +34,17 @@ public class NPCRandomWalk : MonoBehaviour
         bool isMoving = agent.velocity.magnitude > 0.1f;
         animator.SetBool("isWalking", isMoving); //control the walking animation
     }
+
+
+    public void StopWalking()
+    {
+        agent.isStopped = true;
+        animator.SetBool("isWalking", false);
+    }
+
+    public void StartWalking()
+    {
+        agent.isStopped = false;
+        timer = waitTime; //so it immediately picks a new destination
+    }
 }
