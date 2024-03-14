@@ -9,6 +9,7 @@ public class triggerFX : MonoBehaviour
     public AudioClip[] stage3Greetings;//2
     public AudioClip stage2Announcement;//2
     public AudioClip[] bagInteractions;
+    public AudioClip[] weaponInteractions;
     public AudioClip gameOverVoiceLine;
     public AudioClip allTasksCompletedVoiceLine;
     public AudioClip TasksNotCompletedVoiceLine;
@@ -79,11 +80,7 @@ public class triggerFX : MonoBehaviour
         {
             PlayRandomGreeting();
         }
-        if (other.CompareTag("ExamPaper")) 
-        {
-            PlayExamPaperVoiceLine();
-        }
-
+        
     }
 
     void PlayRandomGreeting()
@@ -122,7 +119,7 @@ public class triggerFX : MonoBehaviour
         }
     }
 
-    void PlayExamPaperVoiceLine()
+    public void PlayExamPaperVoiceLine()
     {
         audioSource.PlayOneShot(examPaperVoiceLine);
         animator.SetBool("isSpeaking", true);
@@ -171,6 +168,20 @@ public class triggerFX : MonoBehaviour
             Invoke("StopSpeaking", audioSource.clip.length); // stop speaking animation when audio finished
         }
         
+    }
+
+    public void PlayWeaponInteraction()
+    {
+        if (weaponInteractions.Length == 0) return; // check if there are any bag interaction lines
+        int index = Random.Range(0, weaponInteractions.Length); // randomly select a line for bag interaction
+        if (BagInteraction.bagPacked == false)
+        {
+            audioSource.clip = weaponInteractions[index];
+            audioSource.Play();
+            animator.SetBool("isSpeaking", true); // start speaking animation
+            Invoke("StopSpeaking", audioSource.clip.length); // stop speaking animation when audio finished
+        }
+
     }
     public void PlayEndGameVoiceLine()
     {
