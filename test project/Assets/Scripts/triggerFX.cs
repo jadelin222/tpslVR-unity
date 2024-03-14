@@ -12,6 +12,7 @@ public class triggerFX : MonoBehaviour
     public AudioClip gameOverVoiceLine;
     public AudioClip allTasksCompletedVoiceLine;
     public AudioClip TasksNotCompletedVoiceLine;
+    public AudioClip examPaperVoiceLine;
     public GameObject[] angerSprites;
     public EndGameUI endGameUI;
 
@@ -74,11 +75,15 @@ public class triggerFX : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
       
-        if (other.CompareTag("Player")) // player tagged as "Player"
+        if (other.CompareTag("Player")) 
         {
             PlayRandomGreeting();
         }
-       
+        if (other.CompareTag("ExamPaper")) 
+        {
+            PlayExamPaperVoiceLine();
+        }
+
     }
 
     void PlayRandomGreeting()
@@ -115,6 +120,13 @@ public class triggerFX : MonoBehaviour
             animator.SetBool("isSpeaking", true); 
             Invoke("StopSpeaking", audioSource.clip.length); //schedule end of speaking animation
         }
+    }
+
+    void PlayExamPaperVoiceLine()
+    {
+        audioSource.PlayOneShot(examPaperVoiceLine);
+        animator.SetBool("isSpeaking", true);
+        Invoke("StopSpeaking", examPaperVoiceLine.length);
     }
 
     private void PlayStageAnnouncement(int stage)

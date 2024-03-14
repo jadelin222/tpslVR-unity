@@ -21,7 +21,9 @@ public class Clock : MonoBehaviour {
     //-- internal vars
     float msecs=0;
 
-void Start() 
+    private bool gameOverAnnounced = false;
+
+    void Start() 
 {
 	//-- set real time
 	if (realTime)
@@ -66,9 +68,11 @@ void Update()
     pointerHours.transform.localEulerAngles   = new Vector3(0.0f, 0.0f, rotationHours);
 
      //check if the time is 7 o'clock
-    if (hour == 7 && minutes == 0 && seconds == 0)
+    if (hour == 7 && minutes == 0 && seconds == 0 && !gameOverAnnounced)
     {
+        //gameOver = true;
         npcScript.PlayEndGameVoiceLine();
+        gameOverAnnounced = true;
     }
 
 }
