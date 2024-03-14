@@ -31,7 +31,7 @@ public class PhoneSpawner : MonoBehaviour
                 GrabObject();
             }
 
-            //check for grip release
+            //check for grip release ok 
             bool gripButtonPressed = false;
             rightHandController.TryGetFeatureValue(CommonUsages.gripButton, out gripButtonPressed);
             if (!gripButtonPressed && isObjectHeld)
