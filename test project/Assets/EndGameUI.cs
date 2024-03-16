@@ -20,7 +20,7 @@ public class EndGameUI : MonoBehaviour
     {
         endGameCanvas.SetActive(true);
         TextMeshProUGUI messageText = endGameCanvas.GetComponentInChildren<TextMeshProUGUI>();
-        messageText.text = "You fail to catch the school bus today, mom is going to so angry, while the dad is negligent as always -- If you recognize any behaviors displayed within the game in yourself or others, it’s important to know change is possible and support is available. Seeking professional guidance can be a powerful step towards positive change. For parents, understanding and addressing one’s behavior is a profound way to provide a healthier environment for your family.";
+        messageText.text = "You fail to catch the school bus today, mom is EXPLODING anger, while the dad is negligent as always -- If you recognize any behaviors displayed within the game in yourself or others, it’s important to know change is possible and support is available. Seeking professional guidance can be a powerful step towards positive change. For parents, understanding and addressing one’s behavior is a profound way to provide a healthier environment for your family.";
 
     }
     public void ShowGameWinUI()

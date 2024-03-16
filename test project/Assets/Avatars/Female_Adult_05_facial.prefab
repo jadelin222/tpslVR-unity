@@ -88,6 +88,26 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8804637712421891867, guid: 651f0ad42571d4ce88749f808c372de1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9993003
+      objectReference: {fileID: 0}
+    - target: {fileID: 8804637712421891867, guid: 651f0ad42571d4ce88749f808c372de1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.00000001617352
+      objectReference: {fileID: 0}
+    - target: {fileID: 8804637712421891867, guid: 651f0ad42571d4ce88749f808c372de1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.00000017835384
+      objectReference: {fileID: 0}
+    - target: {fileID: 8804637712421891867, guid: 651f0ad42571d4ce88749f808c372de1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.037403
+      objectReference: {fileID: 0}
+    - target: {fileID: 8804637712421891867, guid: 651f0ad42571d4ce88749f808c372de1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -4.287
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -251,10 +271,20 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ab40f71baf0cf4af0aa05fc1ba246992, type: 3}
   stage2Greetings:
   - {fileID: 8300000, guid: e1356846c0da4410a9dd9c12050cf39e, type: 3}
+  stage1Announcement: {fileID: 0}
   stage3Greetings:
   - {fileID: 8300000, guid: c8cb2fd8b46114a70af7760d8805faf5, type: 3}
+  stage2Announcement: {fileID: 0}
   bagInteractions:
   - {fileID: 8300000, guid: a7003dc86d53b478a93cb64952a7779d, type: 3}
+  weaponInteractions: []
+  gameOverVoiceLine: {fileID: 0}
+  allTasksCompletedVoiceLine: {fileID: 0}
+  TasksNotCompletedVoiceLine: {fileID: 0}
+  examPaperVoiceLine: {fileID: 0}
+  angerSprites: []
+  endGameUI: {fileID: 0}
+  allTasksCompleted: 0
 --- !u!195 &7048922649223842576
 NavMeshAgent:
   m_ObjectHideFlags: 0

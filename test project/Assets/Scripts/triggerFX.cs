@@ -128,6 +128,7 @@ public class triggerFX : MonoBehaviour
 
     private void PlayStageAnnouncement(int stage)
     {
+
         AudioClip clipToPlay = null;
 
         switch (stage)
@@ -150,6 +151,7 @@ public class triggerFX : MonoBehaviour
 
         if (clipToPlay != null)
         {
+            npcRandomWalk.StopWalking();
             audioSource.PlayOneShot(clipToPlay);
             animator.SetBool("isSpeaking", true);
             Invoke("StopSpeaking", clipToPlay.length);
@@ -162,6 +164,7 @@ public class triggerFX : MonoBehaviour
         int index = Random.Range(0, bagInteractions.Length); // randomly select a line for bag interaction
         if (BagInteraction.bagPacked == false)
         {
+            npcRandomWalk.StopWalking();
             audioSource.clip = bagInteractions[index];
             audioSource.Play();
             animator.SetBool("isSpeaking", true); // start speaking animation
@@ -176,6 +179,7 @@ public class triggerFX : MonoBehaviour
         int index = Random.Range(0, weaponInteractions.Length); // randomly select a line for bag interaction
         if (BagInteraction.bagPacked == false)
         {
+            npcRandomWalk.StopWalking();
             audioSource.clip = weaponInteractions[index];
             audioSource.Play();
             animator.SetBool("isSpeaking", true); // start speaking animation
@@ -185,6 +189,7 @@ public class triggerFX : MonoBehaviour
     }
     public void PlayEndGameVoiceLine()
     {
+        npcRandomWalk.StopWalking();
         audioSource.PlayOneShot(gameOverVoiceLine);
         animator.SetBool("isSpeaking", true); // start speaking animation
         Invoke("StopSpeaking", gameOverVoiceLine.length);
@@ -193,6 +198,7 @@ public class triggerFX : MonoBehaviour
     }
     public void AnnounceTasksNonCompletion()
     {
+        npcRandomWalk.StopWalking();
         audioSource.PlayOneShot(TasksNotCompletedVoiceLine);
         animator.SetBool("isSpeaking", true); // start speaking animation
         Invoke("StopSpeaking", gameOverVoiceLine.length);
@@ -202,6 +208,7 @@ public class triggerFX : MonoBehaviour
     {
         if (!tasksCompleteAnnounced) //ensure the announcement hasn't been made already
         {
+            npcRandomWalk.StopWalking();
             audioSource.PlayOneShot(allTasksCompletedVoiceLine);
             animator.SetBool("isSpeaking", true);
             Invoke("StopSpeaking", allTasksCompletedVoiceLine.length);

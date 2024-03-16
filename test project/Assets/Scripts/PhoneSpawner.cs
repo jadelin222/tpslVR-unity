@@ -31,7 +31,7 @@ public class PhoneSpawner : MonoBehaviour
                 GrabObject();
             }
 
-            //check for grip release ok 
+            //check for grip release o
             bool gripButtonPressed = false;
             rightHandController.TryGetFeatureValue(CommonUsages.gripButton, out gripButtonPressed);
             if (!gripButtonPressed && isObjectHeld)
@@ -65,12 +65,12 @@ public class PhoneSpawner : MonoBehaviour
         objectToSpawn.transform.SetParent(null, worldPositionStays: true);
         isObjectHeld = false;
 
-        //make the object non-kinematic to enable physics
+        //make the object non-kinematic to enable physics!
         Rigidbody rb = objectToSpawn.GetComponent<Rigidbody>();
         if (rb != null)
         {
             rb.isKinematic = false;
-            rb.useGravity = true; // Make sure gravity affects the object again
+            rb.useGravity = true; //let gravity affects the object again
         }
     }
 
