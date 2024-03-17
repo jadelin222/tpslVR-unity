@@ -4,7 +4,9 @@ using UnityEngine.AI;
 public class NPCRandomWalk : MonoBehaviour
 {
     public Transform[] walkPoints; 
-    public float waitTime = 60.0f; 
+    public float waitTime = 60.0f;
+    public bool wasWalkingBeforeInterrupted = false;
+
     private NavMeshAgent agent;
     private Animator animator;
     private float timer;
@@ -38,13 +40,26 @@ public class NPCRandomWalk : MonoBehaviour
 
     public void StopWalking()
     {
+        wasWalkingBeforeInterrupted = agent.velocity.magnitude > 0.1f;
         agent.isStopped = true;
         animator.SetBool("isWalking", false);
     }
-
+    
     public void StartWalking()
     {
-        agent.isStopped = false;
-        timer = waitTime; //so it immediately picks a new destination
+        if (wasWalkingBeforeInterrupted)
+        {
+            agent.isStopped = false;
+            timer = waitTime; //reset the timer
+            wasWalkingBeforeInterrupted = false; //reset flag
+        }
+        else
+        {
+            timer = waitTime;
+        }
+
+
+
+
     }
 }

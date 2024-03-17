@@ -93,6 +93,7 @@ public class triggerFX : MonoBehaviour
         AudioClip[] selectedGreetings = null;
         // update the animator with the current stage
         animator.SetInteger("Stage", currentStage);
+        Debug.Log(currentStage);
        //determine the appropriate set of greetings based on the current stage
         switch (currentStage)
         {
@@ -110,6 +111,7 @@ public class triggerFX : MonoBehaviour
         if (selectedGreetings != null && selectedGreetings.Length > 0)
         {
             npcRandomWalk.StopWalking();
+            //GetComponent<NPCRandomWalk>().enabled = false;
 
             int index = Random.Range(0, selectedGreetings.Length);
             audioSource.clip = selectedGreetings[index];
@@ -232,10 +234,16 @@ public class triggerFX : MonoBehaviour
     void StopSpeaking()
     {
         //GetComponent<NPCRandomWalk>().enabled = true;
-        npcRandomWalk.StartWalking();
+        //if (npcRandomWalk.wasWalkingBeforeInterrupted)
+        //{
+            npcRandomWalk.StartWalking();
+        //}
+
         animator.SetBool("isSpeaking", false); // return to idle state
 
     }
+    
+ 
     void FacePlayer()
     {
         Vector3 directionToPlayer = playerTransform.position - transform.position;
